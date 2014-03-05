@@ -34,6 +34,10 @@ describe('TennisGame', function() {
         it('has a `getWinner` method', function() {
             expect(game.getWinner).toBeAFunction();
         });
+
+        it('has an `addPointListener` method', function() {
+            expect(game.addPointListener).toBeAFunction();
+        });
     });
 
     describe("adding the first point", function() {
@@ -82,61 +86,76 @@ describe('TennisGame', function() {
 
     describe("isGameOver", function() {
         it("reports whether a player has won", function() {
-            var game = new TennisGame("Anusha", "Premalatha");
-            game.point("Anusha");
-            game.point("Premalatha");
-            game.point("Premalatha");
-            game.point("Premalatha");
-            game.point("Anusha");
-            game.point("Premalatha");
+            var game = new TennisGame("Karthik", "Amit");
+            game.point("Karthik");
+            game.point("Amit");
+            game.point("Amit");
+            game.point("Amit");
+            game.point("Karthik");
+            game.point("Amit");
             expect(game.isGameOver()).toBe(true);
         });
 
         it("notes 'advantage' situations", function() {
-            var game = new TennisGame("Anusha", "Premalatha");
-            game.point("Anusha");
-            game.point("Premalatha");
-            game.point("Premalatha");
-            game.point("Premalatha");
-            game.point("Anusha");
-            game.point("Anusha");
-            game.point("Premalatha");
+            var game = new TennisGame("Akul", "Saravanna");
+            game.point("Akul");
+            game.point("Saravanna");
+            game.point("Saravanna");
+            game.point("Saravanna");
+            game.point("Akul");
+            game.point("Akul");
+            game.point("Saravanna");
             expect(game.isGameOver()).toBe(false); // 40(ad) - 40
-            game.point("Anusha");
+            game.point("Akul");
             expect(game.isGameOver()).toBe(false); // 40 - 40
-            game.point("Premalatha");
+            game.point("Saravanna");
             expect(game.isGameOver()).toBe(false); // 40(ad) - 40
-            game.point("Anusha");
+            game.point("Akul");
             expect(game.isGameOver()).toBe(false); // 40 - 40
-            game.point("Anusha");
+            game.point("Akul");
             expect(game.isGameOver()).toBe(false); // 40 - 40(ad)
-            game.point("Anusha");
+            game.point("Akul");
             expect(game.isGameOver()).toBe(true);  // 40 - Winner
         });
     });
 
     describe("getWinner", function() {
         it("reports which player has won", function() {
-            var game = new TennisGame("Anusha", "Premalatha");
-            game.point("Anusha");
-            game.point("Premalatha");
-            game.point("Premalatha");
-            game.point("Premalatha");
-            game.point("Anusha");
-            game.point("Premalatha");
-            expect(game.getWinner()).toBe("Premalatha");
+            var game = new TennisGame("Sauyet", "Dillman");
+            game.point("Sauyet");
+            game.point("Dillman");
+            game.point("Dillman");
+            game.point("Dillman");
+            game.point("Sauyet");
+            game.point("Dillman");
+            expect(game.getWinner()).toBe("Dillman");
         });
 
         it("returns `null` if neither player has won", function() {
-            var game = new TennisGame("Anusha", "Premalatha");
-            game.point("Anusha");
-            game.point("Premalatha");
-            game.point("Premalatha");
-            game.point("Premalatha");
-            game.point("Anusha");
+            var game = new TennisGame("Gopika", "Susanta");
+            game.point("Gopika");
+            game.point("Susanta");
+            game.point("Susanta");
+            game.point("Susanta");
+            game.point("Gopika");
             expect(game.getWinner()).toBeNull();
         });
 
-    })
+    });
+
+    describe("pointListener", function() {
+        it("hears when points are added", function() {
+            var game = new TennisGame("Jayasimha", "Abheek");
+            var latest = null;
+            var listener = function(player) {
+                latest = player;
+            };
+            game.addPointListener(listener);
+            game.point("Abheek");
+            expect(latest.name).toBe("Abheek");
+            game.point("Jayasimha");
+            expect(latest.name).toBe("Jayasimha");
+        });
+    });
 
 });

@@ -1,10 +1,5 @@
 var TennisGame = (function() {
-    var pointValues = {
-        0: 0,
-        1: 15,
-        2: 30,
-        3: 40
-    };
+    var pointValues = {0: 0, 1: 15, 2: 30, 3: 40};
     var convert = function(points) {
         var val = pointValues[points];
         return typeof val === "number" ? val : "Winner";
@@ -18,15 +13,16 @@ var TennisGame = (function() {
     var TennisGame = function(first, second) {
         this.first = new Player(first);
         this.second = new Player(second);
+        this.listeners = [];
     };
 
     TennisGame.prototype.point = function(name) {
         if (this.isGameOver()) {return false;}
-        if (name === this.first.name) {
-            return ++this.first.points;
-        } else if (name === this.second.name) {
-            return ++this.second.points;
+        var player = name === this.first.name ? this.first : name === this.second.name ? this.second : null;
+        if (player) {
+            this.listeners.forEach(function(listener) {listener(player);})
         }
+        return player && ++player.points || false;
     };
 
     TennisGame.prototype.getScore = function() {
@@ -41,6 +37,10 @@ var TennisGame = (function() {
     TennisGame.prototype.getWinner = function() {
         if (!this.isGameOver()) {return null;}  // throw error?
         return (this.first.points > this.second.points) ? this.first.name : this.second.name;
+    };
+
+    TennisGame.prototype.addPointListener = function(listener) {
+        this.listeners.push(listener);
     };
 
     return TennisGame;
