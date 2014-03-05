@@ -2,7 +2,7 @@ describe('TennisGame', function() {
     beforeEach(function() {
     });
 
-    describe("is a constructor function", function() {
+    describe("as a constructor", function() {
         it('is a function', function() {
             expect(TennisGame).toBeAFunction();
         });
@@ -62,6 +62,21 @@ describe('TennisGame', function() {
             game.point("Premalatha");
             game.point("Anusha");
             expect(game.getScore()).toBe("[Anusha - Premalatha] 30 - 40");
+        });
+
+        it("has no effect once the game is won", function() {
+            var game = new TennisGame("Anusha", "Premalatha");
+            game.point("Anusha");
+            game.point("Premalatha");
+            game.point("Premalatha");
+            game.point("Premalatha");
+            game.point("Anusha");
+            game.point("Premalatha");
+            expect(game.isGameOver()).toBe(true);
+            expect(game.getScore()).toBe("[Anusha - Premalatha] 30 - Winner");
+            game.point("Anusha");
+            game.point("Anusha");
+            expect(game.getScore()).toBe("[Anusha - Premalatha] 30 - Winner");
         });
     });
 

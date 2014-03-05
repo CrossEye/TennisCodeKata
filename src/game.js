@@ -21,10 +21,11 @@ var TennisGame = (function() {
     };
 
     TennisGame.prototype.point = function(name) {
+        if (this.isGameOver()) {return false;}
         if (name === this.first.name) {
-            this.first.points++;
+            return ++this.first.points;
         } else if (name === this.second.name) {
-            this.second.points++;
+            return ++this.second.points;
         }
     };
 
