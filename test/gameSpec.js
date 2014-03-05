@@ -21,7 +21,18 @@ describe('TennisGame', function() {
 
         it('has a `point` method', function() {
             expect(game.point).toBeAFunction();
-        })
+        });
 
+        it('has a `getScore` method', function() {
+            expect(game.getScore).toBeAFunction();
+        });
+
+        it('has a `isGameOver` method', function() {
+            expect(game.isGameOver).toBeAFunction();
+        });
+
+        it('has a `getWinner` method', function() {
+            expect(game.getWinner).toBeAFunction();
+        });
     });
 });
