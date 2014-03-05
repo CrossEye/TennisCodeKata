@@ -105,17 +105,17 @@ describe('TennisGame', function() {
             game.point("Akul");
             game.point("Akul");
             game.point("Saravanna");
-            expect(game.isGameOver()).toBe(false); // 40(ad) - 40
+            expect(game.isGameOver()).toBe(false);
             game.point("Akul");
-            expect(game.isGameOver()).toBe(false); // 40 - 40
+            expect(game.isGameOver()).toBe(false);
             game.point("Saravanna");
-            expect(game.isGameOver()).toBe(false); // 40(ad) - 40
+            expect(game.isGameOver()).toBe(false);
             game.point("Akul");
-            expect(game.isGameOver()).toBe(false); // 40 - 40
+            expect(game.isGameOver()).toBe(false);
             game.point("Akul");
-            expect(game.isGameOver()).toBe(false); // 40 - 40(ad)
+            expect(game.isGameOver()).toBe(false);
             game.point("Akul");
-            expect(game.isGameOver()).toBe(true);  // 40 - Winner
+            expect(game.isGameOver()).toBe(true);
         });
     });
 
@@ -158,4 +158,28 @@ describe('TennisGame', function() {
         });
     });
 
+    describe("advantage scoring", function() {
+        it("reports when one player has the advantage", function() {
+            var game = new TennisGame("Akul", "Saravanna");
+            game.point("Akul");
+            game.point("Saravanna");
+            game.point("Saravanna");
+            game.point("Saravanna");
+            game.point("Akul");
+            game.point("Akul");
+            game.point("Saravanna");
+            expect(game.getScore()).toBe("[Akul - Saravanna] 40 - 40(ad)");
+            game.point("Akul");
+            expect(game.getScore()).toBe("[Akul - Saravanna] 40 - 40");
+            game.point("Saravanna");
+            expect(game.getScore()).toBe("[Akul - Saravanna] 40 - 40(ad)");
+            game.point("Akul");
+            expect(game.getScore()).toBe("[Akul - Saravanna] 40 - 40");
+            game.point("Akul");
+            expect(game.getScore()).toBe("[Akul - Saravanna] 40(ad) - 40");
+            game.point("Akul");
+            expect(game.getScore()).toBe("[Akul - Saravanna] Winner - 40");
+
+        });
+    });
 });

@@ -1,8 +1,7 @@
 var TennisGame = (function() {
-    var pointValues = {0: 0, 1: 15, 2: 30, 3: 40};
-    var convert = function(points) {
-        var val = pointValues[points];
-        return typeof val === "number" ? val : "Winner";
+    var pointValues = {0: "0", 1: "15", 2: "30", 3: "40"};
+    var convert = function(points, opponent) {
+        return points > 3 ? (points - opponent > 1) ? "Winner" : (points > opponent) ? "40(ad)" : "40" : pointValues[points];
     };
 
     var Player = function(name) {
@@ -26,7 +25,8 @@ var TennisGame = (function() {
     };
 
     TennisGame.prototype.getScore = function() {
-        return "[" + this.first.name + " - " + this.second.name + "] " + convert(this.first.points) + " - " + convert(this.second.points);
+        return "[" + this.first.name + " - " + this.second.name + "] " +
+            convert(this.first.points, this.second.points) + " - " + convert(this.second.points, this.first.points);
     };
 
     TennisGame.prototype.isGameOver = function() {
@@ -45,5 +45,3 @@ var TennisGame = (function() {
 
     return TennisGame;
 }());
-
-
