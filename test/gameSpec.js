@@ -44,7 +44,13 @@ describe('TennisGame', function() {
 
         it("causes the score to be updated properly", function() {
             game.point("John");
-            expect(game.getScore()).toEqual("[John-Mary] 15-0");
-        })
+            expect(game.getScore()).toEqual("[John - Mary] 15 - 0");
+        });
+
+        it("(regardless of which player gets the point)", function() {
+            game.point("Mary");
+            expect(game.getScore()).toEqual("[John - Mary] 0 - 15");
+        });
     });
+
 });
