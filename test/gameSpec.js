@@ -35,4 +35,16 @@ describe('TennisGame', function() {
             expect(game.getWinner).toBeAFunction();
         });
     });
+
+    describe("adding the first point", function() {
+        var game;
+        beforeEach(function() {
+            game = new TennisGame("John", "Mary");
+        });
+
+        it("causes the score to be updated properly", function() {
+            game.point("John");
+            expect(game.getScore()).toEqual("[John-Mary] 15-0");
+        })
+    });
 });
