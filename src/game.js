@@ -32,8 +32,15 @@ var TennisGame = (function() {
         return "[" + this.first.name + " - " + this.second.name + "] " + convert(this.first.points) + " - " + convert(this.second.points);
     };
 
-    TennisGame.prototype.isGameOver = function() {};
-    TennisGame.prototype.getWinner = function() {};
+    TennisGame.prototype.isGameOver = function() {
+        var f = this.first.points, s = this.second.points;
+        return (f > 3 && f - s > 1) || (s > 3 && s - f > 1);
+    };
+
+    TennisGame.prototype.getWinner = function() {
+        if (!this.isGameOver()) {return null;}  // throw error?
+        return (this.first.points > this.second.points) ? this.first.name : this.second.name;
+    };
 
     return TennisGame;
 }());
